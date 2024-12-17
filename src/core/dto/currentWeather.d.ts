@@ -11,7 +11,13 @@ export interface GetCurrentWeatherRequest
   include?: "minutely" | "alerts" | "lightning";
 }
 
-export interface CurrentWeather {
+export interface WeatherDetailDto {
+  icon: string;
+  code: number;
+  description: string;
+}
+
+export interface CurrentWeatherDto {
   wind_cdir: string;
   rh: number;
   pod: string;
@@ -30,11 +36,7 @@ export interface CurrentWeather {
   ts: number;
   h_angle: number;
   dewpt: number;
-  weather: {
-    icon: string;
-    code: number;
-    description: string;
-  };
+  weather: WeatherDetailDto;
   uv: number;
   aqi: number;
   station: string;
