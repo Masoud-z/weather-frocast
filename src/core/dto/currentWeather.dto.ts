@@ -1,8 +1,7 @@
 import { Lang } from "../enums/languages";
 import { Units } from "../enums/units";
 
-export interface GetCurrentWeatherRequest
-  extends GetCurrentWeatherSearchOptions {
+export interface GetCurrentWeatherRequest {
   lang?: Lang;
   units?: Units;
   lat?: number;
@@ -58,6 +57,6 @@ export interface CurrentWeatherDto {
 }
 
 export interface GetCurrentWeatherSearchResult {
-  data: CurrentWeather[];
+  data: CurrentWeatherDto[];
   count: number;
 }

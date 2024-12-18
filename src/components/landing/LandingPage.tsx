@@ -1,34 +1,45 @@
 "use client";
-import { CurrentWeatherDto } from "@/core/dto/currentWeather";
-import { FetchState } from "@/core/dto/fetchState";
+import { CurrentWeatherDto } from "@/core/dto/currentWeather.dto";
+import { FetchState } from "@/core/dto/core/fetchState";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import CurrentWeather from "./CurrentWeather";
 import { getCurrentWeatherServiceApi } from "@/core/services/current/methods";
 import BGDesign from "./BGDesign";
+import ForecastWeather from "./ForecastWeather";
+import { ForecastWeatherDto } from "@/core/dto/dailyForecast.dto";
+import { getDailyForecastWeatherServiceApi } from "@/core/services/forcast/methods";
+import useStore from "@/core/store/useStore";
 
-interface IProps {}
-
-const LandingPage = ({}: IProps) => {
-  const [geoError, setGeoError] = useState("");
+const LandingPage = () => {
+  const unit = useStore((state) => state.unit);
   const [currentWeather, SetCurrentWeather] = useState<
     FetchState<CurrentWeatherDto>
   >({
     loading: true,
   });
+  const [weatherForecast, SetWeatherForecast] = useState<
+    FetchState<{ data: ForecastWeatherDto[]; cityName: string }>
+  >({
+    loading: true,
+  });
 
   useEffect(() => {
-    let lat = 51.5072;
-    let lon = 0.1276;
     if (navigator.geolocation) {
-      console.log("inside");
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position);
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
+        getCurrentWeather(position.coords.latitude, position.coords.longitude);
+        getWeatherForecast(position.coords.latitude, position.coords.longitude);
       }, errorHandler);
+    } else {
+      toast.error("We couldn't get your location");
+      getCurrentWeather();
+      getWeatherForecast();
     }
-    getCurrentWeatherServiceApi({ lat, lon })
+  }, [unit]);
+
+  function getCurrentWeather(lat: number = 51.5072, lon: number = 0.1276) {
+    SetCurrentWeather({ loading: true });
+    getCurrentWeatherServiceApi({ lat, lon, units: unit })
       .then((res) => {
         const data = res.data.data[0];
         if (data) {
@@ -39,21 +50,32 @@ const LandingPage = ({}: IProps) => {
         }
       })
       .catch((err) => {
-        toast.error(err.message || "Something went wrong");
         SetCurrentWeather({
           loading: false,
           error: `${err.message || "Something went wrong"}`,
         });
       });
-  }, []);
+  }
+
+  function getWeatherForecast(lat: number = 51.5072, lon: number = 0.1276) {
+    getDailyForecastWeatherServiceApi({ lat, lon, days: 7, units: unit })
+      .then((res) => {
+        SetWeatherForecast({
+          loading: false,
+          data: { data: res.data.data, cityName: res.data.city_name },
+        });
+      })
+      .catch((err) => {});
+  }
 
   function errorHandler(error: any) {
     toast.error(error.message || "Couldn't get location");
   }
   return (
-    <main className="w-full p-8 min-h-screen grid-cols-1 justify-center items-center relative">
+    <main className="w-full min-h-screen p-8 grid grid-cols-1 justify-center items-center relative gap-9">
       <BGDesign />
       <CurrentWeather currentWeather={currentWeather} />
+      <ForecastWeather weatherForecast={weatherForecast} />
     </main>
   );
 };
