@@ -24,7 +24,7 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
     currentWeather.data && WeekDays[new Date(currentWeather.data.ts).getDay()];
   if (currentWeather.data)
     return (
-      <div className="flex justify-center items-start gap-6 max-lg:flex-col max-lg:items-center">
+      <div className="flex justify-center items-start gap-6 max-lg:flex-col max-lg:items-center self-start ">
         <div className="flex flex-col items-start justify-start gap-3">
           <h1 className="text-4xl">
             {currentWeather.data.city_name}, {currentWeather.data.country_code}

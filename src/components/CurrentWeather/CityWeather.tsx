@@ -8,10 +8,14 @@ import { getCurrentWeatherServiceApi } from "@/core/services/current/methods";
 import BGDesign from "./BGDesign";
 import ForecastWeather from "./ForecastWeather";
 import { ForecastWeatherDto } from "@/core/dto/dailyForecast.dto";
-import { getDailyForecastWeatherServiceApi } from "@/core/services/forcast/methods";
+import { getDailyForecastWeatherServiceApi } from "@/core/services/forecast/methods";
 import useStore from "@/core/store/useStore";
 
-const LandingPage = () => {
+interface IProps {
+  cityName?: string;
+}
+
+const CityWeather = ({ cityName }: IProps) => {
   const unit = useStore((state) => state.unit);
   const [currentWeather, SetCurrentWeather] = useState<
     FetchState<CurrentWeatherDto>
@@ -25,21 +29,28 @@ const LandingPage = () => {
   });
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (cityName) {
+      getWeather({ cityName });
+    } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        getCurrentWeather(position.coords.latitude, position.coords.longitude);
-        getWeatherForecast(position.coords.latitude, position.coords.longitude);
+        getWeather({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
       }, errorHandler);
     } else {
       toast.error("We couldn't get your location");
-      getCurrentWeather();
-      getWeatherForecast();
+      getWeather({});
     }
-  }, [unit]);
+  }, [unit, cityName]);
 
-  function getCurrentWeather(lat: number = 51.5072, lon: number = 0.1276) {
+  function getWeather({ lat = 51.5072, lon = 0.1276, cityName = "" }) {
     SetCurrentWeather({ loading: true });
-    getCurrentWeatherServiceApi({ lat, lon, units: unit })
+    getCurrentWeatherServiceApi(
+      cityName.length > 0
+        ? { city: cityName, units: unit }
+        : { lat, lon, units: unit }
+    )
       .then((res) => {
         const data = res.data.data[0];
         if (data) {
@@ -55,10 +66,11 @@ const LandingPage = () => {
           error: `${err.message || "Something went wrong"}`,
         });
       });
-  }
-
-  function getWeatherForecast(lat: number = 51.5072, lon: number = 0.1276) {
-    getDailyForecastWeatherServiceApi({ lat, lon, days: 7, units: unit })
+    getDailyForecastWeatherServiceApi(
+      cityName.length > 0
+        ? { city: cityName, units: unit, days: 7 }
+        : { lat, lon, units: unit, days: 7 }
+    )
       .then((res) => {
         SetWeatherForecast({
           loading: false,
@@ -66,6 +78,7 @@ const LandingPage = () => {
         });
       })
       .catch((err) => {
+
         SetWeatherForecast({
           loading: false,
           error: `${err.message || "Something went wrong"}`,
@@ -85,4 +98,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default CityWeather;
