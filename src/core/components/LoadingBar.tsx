@@ -1,6 +1,11 @@
-const LoadingBar = () => {
+interface IProps {
+  className?: string;
+}
+const LoadingBar = ({ className }: IProps) => {
   return (
-    <div className="w-full h-full flex justify-center items-center">
+    <div
+      className={`${className} w-full h-full flex justify-center items-center`}
+    >
       <div className="flex justify-center items-center w-6 h-6 ">
         {[...Array(8)].map((_, index) => (
           <span

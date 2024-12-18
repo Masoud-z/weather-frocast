@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const CurrentWeather = ({ currentWeather }: IProps) => {
-  if (currentWeather.loading) return <LoadingBar />;
+  if (currentWeather.loading) return <LoadingBar className="min-h-[200px]" />;
   if (currentWeather.error) return <h1>{currentWeather.error}</h1>;
 
   const unit = useStore((state) => state.unit);
