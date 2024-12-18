@@ -1,4 +1,5 @@
 import { WeatherDetailDto } from "currentWeather";
+import { IntRange, NumberRange, Range } from "./core/numberRange";
 
 export interface GetDailyForecastRequest {
   lang?: Lang;
@@ -7,7 +8,7 @@ export interface GetDailyForecastRequest {
   lon?: number;
   city?: string;
   include?: "minutely" | "alerts" | "lightning";
-  days: NumberRange<1, 16>;
+  days: IntRange<1, 16>;
 }
 
 export interface ForecastWeatherDto {

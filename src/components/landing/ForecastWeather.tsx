@@ -1,11 +1,51 @@
+import { ForecastWeatherDto } from "@/core/dto/dailyForecast";
 import ForecastDayData from "./ForcastDayData";
+import { FetchState } from "@/core/dto/core/fetchState";
+import LoadingBar from "@/core/components/LoadingBar";
+import { useEffect, useState } from "react";
 
-interface Props {}
+interface IProps {
+  weatherForecast: FetchState<{ data: ForecastWeatherDto[]; cityName: string }>;
+}
 
-const ForecastWeather = (props: Props) => {
-  return <div>
-    <ForecastDayData />
-  </div>;
+const ForecastWeather = ({ weatherForecast }: IProps) => {
+  if (weatherForecast.loading) return <LoadingBar />;
+  if (weatherForecast.error) return <h1>{weatherForecast.error}</h1>;
+
+  const [dayCount, setDayCount] = useState(0);
+
+  useEffect(() => {
+    const width = window.innerWidth;
+    setDayCount(
+      width > 2400
+        ? 7
+        : width > 2100
+        ? 6
+        : width > 1750
+        ? 5
+        : width > 1400
+        ? 4
+        : width > 1056
+        ? 3
+        : width > 1024
+        ? 2
+        : 7
+    );
+  }, []);
+
+  if (weatherForecast.data)
+    return (
+      <div className=" flex max-lg:flex-col justify-start max-lg:justify-center items-center gap-4 flex-wrap max-lg:self-center self-start place-self-end max-lg:place-self-center">
+        {weatherForecast.data.data.slice(0, dayCount).map((day, index) => (
+          <ForecastDayData
+            key={day.ts}
+            index={index}
+            dayForecast={day}
+            cityName={weatherForecast.data.cityName}
+          />
+        ))}
+      </div>
+    );
 };
 
 export default ForecastWeather;

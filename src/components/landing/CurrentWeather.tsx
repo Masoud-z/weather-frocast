@@ -2,6 +2,7 @@ import LoadingBar from "@/core/components/LoadingBar";
 import { CurrentWeatherDto } from "@/core/dto/currentWeather";
 import { FetchState } from "@/core/dto/core/fetchState";
 import Image from "next/image";
+import WeekDays from "@/core/constants/weekDays";
 
 interface IProps {
   currentWeather: FetchState<CurrentWeatherDto>;
@@ -11,17 +12,19 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
   if (currentWeather.loading) return <LoadingBar />;
   if (currentWeather.error) return <h1>{currentWeather.error}</h1>;
 
-  const now = new Date();
   const currentTime = new Date().toLocaleString("en-US", {
     timeZone: currentWeather.data?.timezone,
     timeStyle: "short",
   });
+  const day =
+    currentWeather.data && WeekDays[new Date(currentWeather.data.ts).getDay()];
   if (currentWeather.data)
     return (
       <div className="flex justify-center items-start gap-6 max-lg:flex-col max-lg:items-center">
         <div className="flex flex-col items-start justify-start gap-3">
           <h1 className="text-4xl">{currentWeather.data.city_name}</h1>
-          <h1 className="text-2xl">{currentTime}</h1>
+          <h2 className="text-2xl">{currentTime}</h2>
+          <h3 className="text-xl">{day}</h3>
         </div>
         <div className="flex justify-center items-center gap-4">
           <Image

@@ -7,13 +7,17 @@ import CurrentWeather from "./CurrentWeather";
 import { getCurrentWeatherServiceApi } from "@/core/services/current/methods";
 import BGDesign from "./BGDesign";
 import ForecastWeather from "./ForecastWeather";
+import { ForecastWeatherDto } from "@/core/dto/dailyForecast";
+import { getDailyForecastWeatherServiceApi } from "@/core/services/forcast/methods";
 
-interface IProps {}
-
-const LandingPage = ({}: IProps) => {
-  const [geoError, setGeoError] = useState("");
+const LandingPage = () => {
   const [currentWeather, SetCurrentWeather] = useState<
     FetchState<CurrentWeatherDto>
+  >({
+    loading: true,
+  });
+  const [weatherForecast, SetWeatherForecast] = useState<
+    FetchState<{ data: ForecastWeatherDto[]; cityName: string }>
   >({
     loading: true,
   });
@@ -22,10 +26,12 @@ const LandingPage = ({}: IProps) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         getCurrentWeather(position.coords.latitude, position.coords.longitude);
+        getWeatherForecast(position.coords.latitude, position.coords.longitude);
       }, errorHandler);
     } else {
       toast.error("We couldn't get your location");
       getCurrentWeather();
+      getWeatherForecast();
     }
   }, []);
 
@@ -49,14 +55,25 @@ const LandingPage = ({}: IProps) => {
       });
   }
 
+  function getWeatherForecast(lat: number = 51.5072, lon: number = 0.1276) {
+    getDailyForecastWeatherServiceApi({ lat, lon, days: 7 })
+      .then((res) => {
+        SetWeatherForecast({
+          loading: false,
+          data: { data: res.data.data, cityName: res.data.city_name },
+        });
+      })
+      .catch((err) => {});
+  }
+
   function errorHandler(error: any) {
     toast.error(error.message || "Couldn't get location");
   }
   return (
-    <main className="w-full p-8 min-h-screen grid-cols-1 justify-center items-center relative">
+    <main className="w-full min-h-screen p-8 grid grid-cols-1 justify-center items-center relative gap-9">
       <BGDesign />
       <CurrentWeather currentWeather={currentWeather} />
-      <ForecastWeather />
+      <ForecastWeather weatherForecast={weatherForecast} />
     </main>
   );
 };
