@@ -40,7 +40,7 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
       <div className="flex flex-col gap-3 justify-start items-start max-lg:self-center self-start place-self-end max-lg:place-self-center">
         <Link
           href={AppRouteKey.extendedForecast(weatherForecast.data.cityName)}
-          className="text-xl text-center underline hover:text-main transition-all ease-linear duration-300"
+          className="text-xl text-center underline hover:text-main hoverTransition"
         >
           Extended Forecast
         </Link>

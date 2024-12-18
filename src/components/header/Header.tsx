@@ -28,7 +28,7 @@ const Header = () => {
     <div className=" bg-black flex px-5 justify-between items-center h-16 text-white ">
       <Link
         href={AppRouteKey.home}
-        className=" text-2xl text-center p-4 hover:text-main transition-all ease-linear duration-300"
+        className=" text-2xl text-center p-4 hover:text-main hoverTransition "
       >
         Awesome Weather Forecast
       </Link>
@@ -51,7 +51,7 @@ const Header = () => {
           onClick={() => setUnit(Units.Metric)}
           className={`${
             unit !== Units.Metric && "opacity-50"
-          } hover:cursor-pointer hover:scale-110  hover:text-main transition-all ease-linear duration-300`}
+          } hover:cursor-pointer hover:scale-110  hover:text-main hoverTransition`}
         >
           C
         </span>
@@ -60,7 +60,7 @@ const Header = () => {
           onClick={() => setUnit(Units.Fahrenheit)}
           className={` ${
             unit !== Units.Fahrenheit && "opacity-50"
-          } hover:cursor-pointer hover:scale-125 hover:text-main transition-all ease-linear duration-300`}
+          } hover:cursor-pointer hover:scale-125 hover:text-main hoverTransition`}
         >
           F
         </span>
