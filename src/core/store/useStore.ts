@@ -7,15 +7,15 @@ export interface StoreState {
   setUnit: (unit: Units) => void;
 }
 
-const useStore = create<StoreState, [["zustand/persist", { posts: Units }]]>(
+const useStore = create<StoreState, [["zustand/persist", { unit: Units }]]>(
   persist(
     (set, get) => ({
-      unit: Units.Metric,
-      setUnit: (unit: Units) => set({ unit }),
+      unit: get()?.unit || Units.Metric,
+      setUnit: (unit: Units) => set((state) => ({ unit })),
     }),
     {
       name: "unit",
-      partialize: (state) => ({ posts: state.unit }), // Persist only the unit}
+      partialize: (state) => ({ unit: state.unit }), // Persist only the unit}
     }
   )
 );
