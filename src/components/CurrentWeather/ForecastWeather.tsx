@@ -35,7 +35,7 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
     );
   }, []);
 
-  if (weatherForecast.data)
+  if (weatherForecast.data && weatherForecast.data?.data?.length > 0)
     return (
       <div className="flex flex-col gap-3 justify-start items-start max-lg:self-center self-start place-self-end max-lg:place-self-center">
         <Link

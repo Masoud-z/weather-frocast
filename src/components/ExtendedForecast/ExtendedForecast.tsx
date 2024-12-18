@@ -3,7 +3,7 @@
 import LoadingBar from "@/core/components/LoadingBar";
 import { FetchState } from "@/core/dto/core/fetchState";
 import { ForecastWeatherDto } from "@/core/dto/dailyForecast.dto";
-import { getDailyForecastWeatherServiceApi } from "@/core/services/forcast/methods";
+import { getDailyForecastWeatherServiceApi } from "@/core/services/forecast/methods";
 import useStore from "@/core/store/useStore";
 import { useEffect, useState } from "react";
 import ExtendedDayForecast from "./ExtendedDayForecast";
