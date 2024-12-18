@@ -1,7 +1,7 @@
 import {
   GetCurrentWeatherRequest,
   GetCurrentWeatherSearchResult,
-} from "@/core/dto/currentWeather";
+} from "@/core/dto/currentWeather.dto";
 import { httpGetService } from "../httpService";
 
 export const getCurrentWeatherServiceApi = (

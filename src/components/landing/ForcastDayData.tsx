@@ -1,5 +1,5 @@
 import WeekDays from "@/core/constants/weekDays";
-import { ForecastWeatherDto } from "@/core/dto/dailyForecast";
+import { ForecastWeatherDto } from "@/core/dto/dailyForecast.dto";
 import Image from "next/image";
 
 interface IProps {

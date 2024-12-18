@@ -1,4 +1,7 @@
-import { GetDailyForecastRequest, GetDailyForecastResult } from "@/core/dto/dailyForecast";
+import {
+  GetDailyForecastRequest,
+  GetDailyForecastResult,
+} from "@/core/dto/dailyForecast.dto";
 import { httpGetService } from "../httpService";
 
 export const getDailyForecastWeatherServiceApi = (

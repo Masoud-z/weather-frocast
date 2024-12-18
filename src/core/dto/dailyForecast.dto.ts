@@ -1,5 +1,7 @@
-import { WeatherDetailDto } from "currentWeather";
-import { IntRange, NumberRange, Range } from "./core/numberRange";
+import { IntRange } from "./core/numberRange";
+import { Units } from "../enums/units";
+import { Lang } from "../enums/languages";
+import { WeatherDetailDto } from "./currentWeather.dto";
 
 export interface GetDailyForecastRequest {
   lang?: Lang;

@@ -1,4 +1,4 @@
-import { ForecastWeatherDto } from "@/core/dto/dailyForecast";
+import { ForecastWeatherDto } from "@/core/dto/dailyForecast.dto";
 import ForecastDayData from "./ForcastDayData";
 import { FetchState } from "@/core/dto/core/fetchState";
 import LoadingBar from "@/core/components/LoadingBar";

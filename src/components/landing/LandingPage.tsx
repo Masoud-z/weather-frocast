@@ -1,5 +1,5 @@
 "use client";
-import { CurrentWeatherDto } from "@/core/dto/currentWeather";
+import { CurrentWeatherDto } from "@/core/dto/currentWeather.dto";
 import { FetchState } from "@/core/dto/core/fetchState";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -7,10 +7,12 @@ import CurrentWeather from "./CurrentWeather";
 import { getCurrentWeatherServiceApi } from "@/core/services/current/methods";
 import BGDesign from "./BGDesign";
 import ForecastWeather from "./ForecastWeather";
-import { ForecastWeatherDto } from "@/core/dto/dailyForecast";
+import { ForecastWeatherDto } from "@/core/dto/dailyForecast.dto";
 import { getDailyForecastWeatherServiceApi } from "@/core/services/forcast/methods";
+import useStore from "@/core/store/useStore";
 
 const LandingPage = () => {
+  const unit = useStore((state) => state.unit);
   const [currentWeather, SetCurrentWeather] = useState<
     FetchState<CurrentWeatherDto>
   >({
@@ -33,11 +35,11 @@ const LandingPage = () => {
       getCurrentWeather();
       getWeatherForecast();
     }
-  }, []);
+  }, [unit]);
 
   function getCurrentWeather(lat: number = 51.5072, lon: number = 0.1276) {
     SetCurrentWeather({ loading: true });
-    getCurrentWeatherServiceApi({ lat, lon })
+    getCurrentWeatherServiceApi({ lat, lon, units: unit })
       .then((res) => {
         const data = res.data.data[0];
         if (data) {
@@ -56,7 +58,7 @@ const LandingPage = () => {
   }
 
   function getWeatherForecast(lat: number = 51.5072, lon: number = 0.1276) {
-    getDailyForecastWeatherServiceApi({ lat, lon, days: 7 })
+    getDailyForecastWeatherServiceApi({ lat, lon, days: 7, units: unit })
       .then((res) => {
         SetWeatherForecast({
           loading: false,
