@@ -16,7 +16,7 @@ const ExtendedDayForecast = ({ data, index }: IProps) => {
   const month = Months[datetime.getMonth()];
   const date = datetime.getDate();
   return (
-    <div className="flex w-10/12 justify-between items-center p-4 rounded-lg border border-main border-solid bg-[rgba(81,169,255,0.3)] transition-all ease-linear duration-300 shadow-[inset_0_35px_60px_-15px_rgba(81,169,255,0.6)] hover:bg-[rgba(81,169,255,0.1)]">
+    <div className="flex w-10/12 justify-between items-center p-4 rounded-lg border border-main border-solid bg-[rgba(81,169,255,0.3)] hoverTransition shadow-[inset_0_35px_60px_-15px_rgba(81,169,255,0.6)] hover:bg-[rgba(81,169,255,0.1)]">
       <div className="flex flex-col items-start gap-1">
         <h1 className="font-bold text-2xl">
           {index === 0 ? "Today" : index === 1 ? "Tomorrow" : day}

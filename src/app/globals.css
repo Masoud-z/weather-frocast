@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .hoverTransition {
+    @apply transition-all ease-linear duration-300;
+  }
+}

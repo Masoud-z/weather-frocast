@@ -5,6 +5,8 @@ import Image from "next/image";
 import { WeekDays } from "@/core/constants/date";
 import getUnitSign from "@/core/utilities/unitsSign";
 import useStore from "@/core/store/useStore";
+import Link from "next/link";
+import { AppRouteKey } from "@/core/constants/routes";
 
 interface IProps {
   currentWeather: FetchState<CurrentWeatherDto>;
@@ -31,6 +33,12 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
           </h1>
           <h2 className="text-2xl">{currentTime}</h2>
           <h3 className="text-xl">{day}</h3>
+          <Link
+            className="hover:text-main underline hoverTransition"
+            href={AppRouteKey.historicalWeather(currentWeather.data.city_name)}
+          >
+            Historical Weather
+          </Link>
         </div>
         <div className="flex justify-center items-center gap-4">
           <Image
