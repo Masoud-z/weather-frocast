@@ -11,7 +11,7 @@ const Header = () => {
     <div className=" bg-black flex px-5 justify-between items-center h-16 text-white ">
       <Link
         href={AppRouteKey.home}
-        className=" text-2xl text-center p-4 hover:opacity-60 transition-all ease-linear duration-300"
+        className=" text-2xl text-center p-4 hover:text-main transition-all ease-linear duration-300"
       >
         Awesome Weather Forecast
       </Link>

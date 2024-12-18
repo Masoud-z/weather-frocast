@@ -2,7 +2,7 @@ import LoadingBar from "@/core/components/LoadingBar";
 import { CurrentWeatherDto } from "@/core/dto/currentWeather.dto";
 import { FetchState } from "@/core/dto/core/fetchState";
 import Image from "next/image";
-import WeekDays from "@/core/constants/weekDays";
+import { WeekDays } from "@/core/constants/date";
 import getUnitSign from "@/core/utilities/unitsSign";
 import useStore from "@/core/store/useStore";
 
@@ -14,7 +14,7 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
   if (currentWeather.loading) return <LoadingBar className="min-h-[200px]" />;
   if (currentWeather.error) return <h1>{currentWeather.error}</h1>;
 
-  const unit = useStore((state) => state.unit);
+  const unit = getUnitSign(useStore((state) => state.unit));
 
   const currentTime = new Date().toLocaleString("en-US", {
     timeZone: currentWeather.data?.timezone,
@@ -26,7 +26,9 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
     return (
       <div className="flex justify-center items-start gap-6 max-lg:flex-col max-lg:items-center">
         <div className="flex flex-col items-start justify-start gap-3">
-          <h1 className="text-4xl">{currentWeather.data.city_name}</h1>
+          <h1 className="text-4xl">
+            {currentWeather.data.city_name}, {currentWeather.data.country_code}
+          </h1>
           <h2 className="text-2xl">{currentTime}</h2>
           <h3 className="text-xl">{day}</h3>
         </div>
@@ -42,13 +44,13 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
               {currentWeather.data.weather.description}
             </h2>
             <h1 className="font-bold opacity-50 text-6xl">
-              {currentWeather.data.temp} °{getUnitSign(unit)}
+              {currentWeather.data.temp} °{unit}
             </h1>
           </div>
         </div>
         <div className="flex flex-col justify-center items-start my-auto ml-4 max-lg:ml-0">
           <span>
-            Feels Like {currentWeather.data.app_temp} °{getUnitSign(unit)}
+            Feels Like {currentWeather.data.app_temp} °{unit}
           </span>
           <span className="opacity-50">
             Humidity {currentWeather.data.rh} %
