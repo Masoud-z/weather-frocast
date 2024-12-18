@@ -65,7 +65,12 @@ const LandingPage = () => {
           data: { data: res.data.data, cityName: res.data.city_name },
         });
       })
-      .catch((err) => {});
+      .catch((err) => {
+        SetWeatherForecast({
+          loading: false,
+          error: `${err.message || "Something went wrong"}`,
+        });
+      });
   }
 
   function errorHandler(error: any) {

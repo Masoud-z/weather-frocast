@@ -3,6 +3,8 @@ import ForecastDayData from "./ForcastDayData";
 import { FetchState } from "@/core/dto/core/fetchState";
 import LoadingBar from "@/core/components/LoadingBar";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { AppRouteKey } from "@/core/constants/routes";
 
 interface IProps {
   weatherForecast: FetchState<{ data: ForecastWeatherDto[]; cityName: string }>;
@@ -35,15 +37,23 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
 
   if (weatherForecast.data)
     return (
-      <div className=" flex max-lg:flex-col justify-start max-lg:justify-center items-center gap-4 flex-wrap max-lg:self-center self-start place-self-end max-lg:place-self-center">
-        {weatherForecast.data.data.slice(0, dayCount).map((day, index) => (
-          <ForecastDayData
-            key={day.ts}
-            index={index}
-            dayForecast={day}
-            cityName={weatherForecast.data.cityName}
-          />
-        ))}
+      <div className="flex flex-col gap-3 justify-start items-start max-lg:self-center self-start place-self-end max-lg:place-self-center">
+        <Link
+          href={AppRouteKey.extendedForecast(weatherForecast.data.cityName)}
+          className="text-xl text-center underline hover:text-main transition-all ease-linear duration-300"
+        >
+          Extended Forecast
+        </Link>
+        <div className=" flex max-lg:flex-col justify-start max-lg:justify-center items-center gap-4 flex-wrap ">
+          {weatherForecast.data.data.slice(0, dayCount).map((day, index) => (
+            <ForecastDayData
+              key={day.datetime}
+              index={index}
+              dayForecast={day}
+              cityName={weatherForecast.data.cityName}
+            />
+          ))}
+        </div>
       </div>
     );
 };
