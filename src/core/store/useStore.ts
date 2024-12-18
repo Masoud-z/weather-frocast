@@ -4,6 +4,7 @@ import { Units } from "@/core/enums/units";
 
 export interface StoreState {
   unit: Units;
+  setUnit: (unit: Units) => void;
 }
 
 const useStore = create<StoreState, [["zustand/persist", { posts: Units }]]>(
