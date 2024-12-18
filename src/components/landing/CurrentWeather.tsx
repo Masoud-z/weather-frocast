@@ -1,6 +1,6 @@
 import LoadingBar from "@/core/components/LoadingBar";
 import { CurrentWeatherDto } from "@/core/dto/currentWeather";
-import { FetchState } from "@/core/dto/fetchState";
+import { FetchState } from "@/core/dto/core/fetchState";
 import Image from "next/image";
 
 interface IProps {
@@ -8,11 +8,14 @@ interface IProps {
 }
 
 const CurrentWeather = ({ currentWeather }: IProps) => {
-  const now = new Date();
-  const currentTime = now.toLocaleTimeString(undefined, { timeStyle: "short" });
   if (currentWeather.loading) return <LoadingBar />;
   if (currentWeather.error) return <h1>{currentWeather.error}</h1>;
 
+  const now = new Date();
+  const currentTime = new Date().toLocaleString("en-US", {
+    timeZone: currentWeather.data?.timezone,
+    timeStyle: "short",
+  });
   if (currentWeather.data)
     return (
       <div className="flex justify-center items-start gap-6 max-lg:flex-col max-lg:items-center">
@@ -36,7 +39,7 @@ const CurrentWeather = ({ currentWeather }: IProps) => {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-start my-auto">
+        <div className="flex flex-col justify-center items-start my-auto ml-4 max-lg:ml-0">
           <span>Feels Like {currentWeather.data.app_temp} °C</span>
           <span className="opacity-50">
             Humidity {currentWeather.data.rh} %

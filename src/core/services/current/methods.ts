@@ -10,5 +10,5 @@ export const getCurrentWeatherServiceApi = (
   return httpGetService<
     GetCurrentWeatherSearchResult,
     GetCurrentWeatherRequest
-  >("current", { params }, false);
+  >("current", { params }, true);
 };
