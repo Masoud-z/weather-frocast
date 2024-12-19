@@ -4,13 +4,21 @@ import { AppRouteKey } from "@/core/constants/routes";
 import { Units } from "@/core/enums/units";
 import useStore from "@/core/store/useStore";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Header = () => {
   const unit = useStore((state) => state.unit);
   const setUnit = useStore((state) => state.setUnit);
   const router = useRouter();
   const input = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => console.log("scope is: ", registration.scope));
+    }
+  }, []);
 
   function submitSearch() {
     if (input.current === null || input.current.value === "") {
