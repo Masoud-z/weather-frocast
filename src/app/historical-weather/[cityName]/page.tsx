@@ -34,8 +34,8 @@ const HistoricalWeatherPage = ({ params }: IProps) => {
   useEffect(() => {
     getDailyHistoryServiceApi({
       city: cityName,
-      start_date: formattedToday,
-      end_date: formattedOneYearAgo,
+      start_date: formattedOneYearAgo,
+      end_date: formattedToday,
       units: unit,
     })
       .then((res) => {
@@ -53,6 +53,7 @@ const HistoricalWeatherPage = ({ params }: IProps) => {
       <h1 className="font-bold text-4xl">
         Weather of {cityName} During Past Year
       </h1>
+      {/* <HistoricalWeatherChart historyWeather={historyWeather.data} /> */}
       {historyWeather.loading && <LoadingBar />}
       {historyWeather.error && <h1>{historyWeather.error}</h1>}
       {historyWeather.data && (
