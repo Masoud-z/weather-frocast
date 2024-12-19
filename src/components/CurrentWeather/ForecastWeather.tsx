@@ -17,6 +17,15 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
   const [dayCount, setDayCount] = useState(0);
 
   useEffect(() => {
+    adjustDayCount();
+    window.addEventListener("resize", adjustDayCount);
+
+    return () => {
+      window.removeEventListener("resize", adjustDayCount);
+    };
+  }, []);
+
+  function adjustDayCount() {
     const width = window.innerWidth;
     setDayCount(
       width > 2400
@@ -33,7 +42,7 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
         ? 2
         : 7
     );
-  }, []);
+  }
 
   if (weatherForecast.data && weatherForecast.data?.data?.length > 0)
     return (
