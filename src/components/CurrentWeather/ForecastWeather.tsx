@@ -19,13 +19,10 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
   useEffect(() => {
     adjustDayCount();
     window.addEventListener("resize", adjustDayCount);
-
-    return () => {
-      window.removeEventListener("resize", adjustDayCount);
-    };
   }, []);
 
   function adjustDayCount() {
+    console.log("resize");
     const width = window.innerWidth;
     setDayCount(
       width > 2400
