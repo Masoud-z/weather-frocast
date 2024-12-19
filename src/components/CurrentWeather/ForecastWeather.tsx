@@ -22,7 +22,6 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
   }, []);
 
   function adjustDayCount() {
-    console.log("resize");
     const width = window.innerWidth;
     setDayCount(
       width > 2400
