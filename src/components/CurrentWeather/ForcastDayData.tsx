@@ -14,7 +14,7 @@ const ForecastDayData = ({ dayForecast, cityName, index }: IProps) => {
   const day = WeekDays[new Date(dayForecast.datetime).getDay()];
   const unit = getUnitSign(useStore((state) => state.unit));
   return (
-    <div className=" w-80 h-80 z-50 grid grid-cols-2 grid-rows-2 gap-1 justify-center items-center bg-[rgba(81,169,255,0.3)] rounded-full shadow-[inset_0_35px_60px_-15px_rgba(81,169,255,0.6)] p-6 ">
+    <div className=" w-80 h-80 z-50 grid grid-cols-2 grid-rows-2 gap-1 justify-center items-center bg-[rgba(81,169,255,0.3)] rounded-full shadow-[inset_0_35px_60px_-15px_rgba(81,169,255,0.6)] p-6 max-lg:scale-75 max-lg:-mb-8 ">
       <div className="text-6xl text-center font-bold self-end">
         {dayForecast.temp}°
       </div>

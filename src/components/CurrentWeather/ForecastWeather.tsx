@@ -37,14 +37,14 @@ const ForecastWeather = ({ weatherForecast }: IProps) => {
 
   if (weatherForecast.data && weatherForecast.data?.data?.length > 0)
     return (
-      <div className="flex flex-col gap-3 justify-start items-start max-lg:self-center self-start place-self-end max-lg:place-self-center">
+      <div className="flex flex-col gap-3 justify-start items-start max-lg:items-center max-lg:self-center self-start place-self-end max-lg:place-self-center">
         <Link
           href={AppRouteKey.extendedForecast(weatherForecast.data.cityName)}
           className="text-xl text-center underline hover:text-main hoverTransition"
         >
           Extended Forecast
         </Link>
-        <div className=" flex max-lg:flex-col justify-start max-lg:justify-center items-center gap-4 flex-wrap ">
+        <div className=" flex max-lg:flex-col justify-start max-lg:justify-center items-center gap-4 max-lg:gap-0  flex-wrap ">
           {weatherForecast.data.data.slice(0, dayCount).map((day, index) => (
             <ForecastDayData
               key={day.datetime}

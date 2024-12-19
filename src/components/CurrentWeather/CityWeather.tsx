@@ -78,7 +78,6 @@ const CityWeather = ({ cityName }: IProps) => {
         });
       })
       .catch((err) => {
-
         SetWeatherForecast({
           loading: false,
           error: `${err.message || "Something went wrong"}`,
@@ -90,7 +89,7 @@ const CityWeather = ({ cityName }: IProps) => {
     toast.error(error.message || "Couldn't get location");
   }
   return (
-    <main className="w-full min-h-screen p-8 grid grid-cols-1 justify-center items-center relative gap-9">
+    <main className="w-full min-h-screen p-8 grid grid-cols-1 justify-center items-center relative gap-9 max-lg:gap-4 max-lg:p-2">
       <BGDesign />
       <CurrentWeather currentWeather={currentWeather} />
       <ForecastWeather weatherForecast={weatherForecast} />

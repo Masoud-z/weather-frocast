@@ -50,7 +50,7 @@ const HistoricalWeatherPage = ({ params }: IProps) => {
   }, [unit]);
   return (
     <div className="flex flex-col items-center justify-center mt-8 gap-8">
-      <h1 className="font-bold text-4xl">
+      <h1 className="font-bold text-4xl max-lg:text-2xl text-center px-2">
         Weather of {cityName} During Past Year
       </h1>
       {/* <HistoricalWeatherChart historyWeather={historyWeather.data} /> */}

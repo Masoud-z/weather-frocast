@@ -30,17 +30,18 @@ const Header = () => {
         href={AppRouteKey.home}
         className=" text-2xl text-center p-4 hover:text-main hoverTransition "
       >
-        Awesome Weather Forecast
+        <span className="max-lg:hidden">Awesome Weather Forecast</span>
+        <span className="lg:hidden">AWF</span>
       </Link>
-      <div className="flex justify-center items-center border border-solid border-white rounded-lg p-2">
+      <div className="flex justify-center items-center  border border-solid border-white rounded-lg p-2 max-lg:w-5/12 max-lg:p-0">
         <input
           ref={input}
           type="text"
           name="search"
           id="search"
-          placeholder="Search Cities..."
+          placeholder=""
           onKeyDown={handleKeyPress}
-          className="border-none p-1 focus:border-none outline-none bg-[rgba(0,0,0,0)] text-white"
+          className="border-none p-1 w-full focus:border-none outline-none bg-[rgba(0,0,0,0)] text-white"
         />
         <button className="hover:cursor-pointer" onClick={() => submitSearch()}>
           &#x1f50d;
