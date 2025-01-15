@@ -32,12 +32,15 @@ const CityWeather = ({ cityName }: IProps) => {
     if (cityName) {
       getWeather({ cityName });
     } else if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        getWeather({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      }, errorHandler);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          getWeather({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+        },
+        (error: GeolocationPositionError) => errorHandler(error)
+      );
     } else {
       toast.error("We couldn't get your location");
       getWeather({});
@@ -85,7 +88,7 @@ const CityWeather = ({ cityName }: IProps) => {
       });
   }
 
-  function errorHandler(error: any) {
+  function errorHandler(error: GeolocationPositionError) {
     toast.error(error.message || "Couldn't get location");
   }
   return (
