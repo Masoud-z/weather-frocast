@@ -53,7 +53,6 @@ const HistoricalWeatherPage = ({ params }: IProps) => {
       <h1 className="font-bold text-4xl max-lg:text-2xl text-center px-2">
         Weather of {cityName} During Past Year
       </h1>
-      {/* <HistoricalWeatherChart historyWeather={historyWeather.data} /> */}
       {historyWeather.loading && <LoadingBar />}
       {historyWeather.error && <h1>{historyWeather.error}</h1>}
       {historyWeather.data && (
