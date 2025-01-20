@@ -27,6 +27,7 @@ const HistoricalWeatherPage = ({ params }: IProps) => {
   ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
   today.setFullYear(today.getFullYear() - 1);
+  
   const formattedOneYearAgo = `${today.getFullYear()}-${String(
     today.getMonth() + 1
   ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
